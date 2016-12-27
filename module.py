@@ -61,3 +61,28 @@ def afficher_credits():
     print("Le jeu a été originelement développé pour MS-DOS mais normalement il fonctionne également sous UNIX")
     print("Vous êtes libre de copier, modifier, vendre ou distribuer ce programme à condition de mentionner son auteur, 24/12/16")
     input("Appuyez sur 'entrée' pour continuer")
+
+def chiffrage(mot, clef, sens='chiffrage'):
+    i = 0
+    mot_chiffree = ''
+    for lettre in mot:
+        if sens == 'chiffrage':
+            mot_chiffree += chr(((ord(lettre) + ord(clef[i]))) % 127)
+        else:
+            mot_chiffree += chr((ord(lettre) - ord(clef[i])))
+        i += 1
+        try:
+            clef[i]
+        except:
+            i = 0
+    return mot_chiffree
+
+
+if __name__ == "__main__":
+    try:
+        a = chiffrage('louis', 'erty')
+        b = chiffrage('dechiffrage', a, 'erty')
+        assert a == b
+    except:
+        print("Chiffrage a rencontré une erreur")
+    

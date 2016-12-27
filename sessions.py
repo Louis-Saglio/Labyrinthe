@@ -15,7 +15,7 @@ def creer_compte():
         }
     with open(user_name, 'wb') as fichier:
         mon_pickler = Pickler(fichier)
-        mon_pickler.dump(password)
+        mon_pickler.dump(data)
     chdir('..')
 
 def lire_compte(user_name, password):
@@ -25,7 +25,6 @@ def lire_compte(user_name, password):
     with open(user_name, 'rb') as fichier:
         depickler = Unpickler(fichier)
         data = depickler.load()
-        print(data)
     chdir('..')
     return data
 
