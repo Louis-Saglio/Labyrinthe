@@ -65,24 +65,31 @@ def afficher_credits():
 def chiffrage(mot, clef, sens='chiffrage'):
     i = 0
     mot_chiffree = ''
-    for lettre in mot:
+    for lettre in mot:        
         if sens == 'chiffrage':
-            mot_chiffree += chr(((ord(lettre) + ord(clef[i]))) % 127)
+            etape = ord(lettre) + ord(clef[i])            
         else:
-            mot_chiffree += chr((ord(lettre) - ord(clef[i])))
-        i += 1
-        try:
-            clef[i]
-        except:
-            i = 0
+            etape = ord(lettre) - ord(clef[i])
+        mot_chiffree += chr(etape % 127)
+    i += 1
+    if i == len(clef):
+        i = 0
     return mot_chiffree
 
 
 if __name__ == "__main__":
-    try:
-        a = chiffrage('louis', 'erty')
-        b = chiffrage('dechiffrage', a, 'erty')
-        assert a == b
-    except:
-        print("Chiffrage a rencontré une erreur")
-    
+    def autre():
+        from random import randint
+        mot = ''
+        alpha = "azertyuiopqsdfghjklmwxcvbn123456789,.;:!"
+        for i in range(randint(1,15)):
+            c = alpha[randint(0,len(alpha)-1)]
+            mot += c
+        return mot
+    error = 0
+    for i in range(1000):
+        mot = autre()
+        clef = autre()
+        a = chiffrage(mot, clef)
+        b = chiffrage(a, clef, 'dechiffrage')
+        assert b == mot
