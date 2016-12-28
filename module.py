@@ -76,20 +76,20 @@ def chiffrage(mot, clef, sens='chiffrage'):
         i = 0
     return mot_chiffree
 
+def gen_mot_rand():
+    from random import randint
+    mot = ''
+    alpha = "azertyuiopqsdfghjklmwxcvbn0123456789"
+    for i in range(randint(1,15)):
+        c = alpha[randint(0,len(alpha)-1)]
+        mot += c
+    return mot
+
 
 if __name__ == "__main__":
-    def autre():
-        from random import randint
-        mot = ''
-        alpha = "azertyuiopqsdfghjklmwxcvbn123456789,.;:!"
-        for i in range(randint(1,15)):
-            c = alpha[randint(0,len(alpha)-1)]
-            mot += c
-        return mot
-    error = 0
-    for i in range(1000):
-        mot = autre()
-        clef = autre()
+    for i in range(1):
+        mot = gen_mot_rand()
+        clef = gen_mot_rand()
         a = chiffrage(mot, clef)
         b = chiffrage(a, clef, 'dechiffrage')
         assert b == mot
