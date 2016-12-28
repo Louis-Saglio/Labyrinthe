@@ -1,9 +1,36 @@
+#ajouter le score au stat du joueur
+
 from labigenerator import *
 from module import *
+from sessions import *
 from time import time
 
+action = ' '
+while action not in ('123'):
+    effacer_ecran()
+    print("Bonjour, choisissez ce que vous voulez faire")
+    print("Créer un nouveau compte et jouer...................1")
+    print("Se connecter à un compte déjà existant et jouer....2")
+    print("Voir les crédits et jouer..........................3")
+    action = input()
+
+if action == '1':
+    effacer_ecran()
+    creer_compte(verbose=True)
+
+
+if action == '2':
+    effacer_ecran()
+    user = False
+    while user is False:
+        user = connexion()
+
+if action == '3':
+    effacer_ecran()
+    afficher_credits()
+    input()
+
 effacer_ecran()
-afficher_credits()
 
 print("choisissez la taille du labyrinthe")
 effacer_ecran()
