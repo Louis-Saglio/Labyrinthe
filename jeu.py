@@ -1,4 +1,6 @@
-#ajouter le score au stat du joueur
+#ajouter moyenne joueur
+#ajouter les meilleurs scores
+#sécuriser les inputs
 
 from labigenerator import *
 from module import *
@@ -11,32 +13,35 @@ while action not in ('123'):
     print("Bonjour, choisissez ce que vous voulez faire")
     print("Créer un nouveau compte et jouer...................1")
     print("Se connecter à un compte déjà existant et jouer....2")
-    print("Voir les crédits et jouer..........................3")
+    print("Voir les crédits...................................3")
     action = input()
-
-if action == '1':
     effacer_ecran()
-    creer_compte(verbose=True)
 
+    if action == '1':
+        identifiants = creer_compte(verbose=True)
 
-if action == '2':
-    effacer_ecran()
-    user = False
-    while user is False:
-        user = connexion()
+    if action == '2':
+        identifiants = False
+        while identifiants is False:
+            identifiants = connexion()
 
-if action == '3':
-    effacer_ecran()
-    afficher_credits()
-    input()
+    if action == '3':
+        afficher_credits()
+        action = ' '
+
+userName = identifiants['user_name']
+password = identifiants['password']
+print(userName)
+print(password)
+input()
 
 effacer_ecran()
 
 print("choisissez la taille du labyrinthe")
 effacer_ecran()
-print("Choisissez une largeur")
-hauteur = choisir_une_taille(4,60)
 print("choisissez une hauteur")
+hauteur = choisir_une_taille(4,60)
+print("Choisissez une largeur")
 largeur = choisir_une_taille(4,50)
 
 effacer_ecran()
@@ -79,7 +84,9 @@ while victoire is False:
         afficher_matrice(matrice)
         date_fin = time()
         duree_partie = round(date_fin - date_debut)
+        score = round((largeur*hauteur)*3 / (((nbrCoups)+(duree_partie)) / 2))
         print('Vous avez gagné')
         print("La partie a durée", duree_partie, "secondes")
         print("Vous avez mis", nbrCoups, "coups")
-        print('Votre score est de', round((largeur*hauteur)*3 / (((nbrCoups)+(duree_partie)) / 2)), 'points')
+        print('Votre score est de', score, 'points')
+        enregistrer_score(userName, password, score)
