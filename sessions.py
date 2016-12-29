@@ -5,6 +5,7 @@ def creer_compte(user_name='', password='', verbose=False):
     if verbose is True:
         user_name = input("Choisissez un nom d'utilisateur")
         password = input("Choisissez un mot de passe")
+    password_clair = password
     password = chiffrage(password, password)
     data = {
         'password': password,
@@ -13,6 +14,7 @@ def creer_compte(user_name='', password='', verbose=False):
     with open('saved_game/' + user_name, 'wb') as fichier:
         mon_pickler = Pickler(fichier)
         mon_pickler.dump(data)
+    return {'user_name' : user_name, 'password' : password_clair}
 
 def lire_compte(user_name):
     from pickle import Unpickler
@@ -49,7 +51,7 @@ def connexion(mode='verbose', user_name='', password=''):
         password = input("Mot-de-passe ?")
     try:
         assert verifier_password(user_name, password) is True
-        return user_name
+        return {'user_name' : user_name, 'password' : password}
     except:
         if mode == 'verbose':
             print("Nom d'utilisateur ou mot de passe invalide")
