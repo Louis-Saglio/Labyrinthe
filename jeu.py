@@ -15,7 +15,8 @@ while action not in ('123'):
     print("Se connecter à un compte déjà existant et jouer....2")
     print("Voir les crédits...................................3")
     print("Voir les meilleurs scores..........................4")
-    action = input()
+    print("Voir ses scores....................................5")
+    action = demander(plage='12345')
     effacer_ecran()
 
     if action == '1':
@@ -33,12 +34,21 @@ while action not in ('123'):
     if action == '4':
         afficher_meilleurs_scores()
 
+    if action == '5':
+        identifiants = False
+        while identifiants is False:
+            identifiants = connexion()
+            userName = identifiants['user_name']
+            data = lire_compte(userName)
+            scores = data['scores']
+            for score in scores:
+                print(score, end='; ')
+        action = ' '
+        input()
+
 
 userName = identifiants['user_name']
 password = identifiants['password']
-print(userName)
-print(password)
-input()
 
 effacer_ecran()
 
