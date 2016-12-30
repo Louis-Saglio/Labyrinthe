@@ -14,6 +14,7 @@ while action not in ('123'):
     print("Créer un nouveau compte et jouer...................1")
     print("Se connecter à un compte déjà existant et jouer....2")
     print("Voir les crédits...................................3")
+    print("Voir les meilleurs scores..........................4")
     action = input()
     effacer_ecran()
 
@@ -28,6 +29,10 @@ while action not in ('123'):
     if action == '3':
         afficher_credits()
         action = ' '
+    
+    if action == '4':
+        pass
+
 
 userName = identifiants['user_name']
 password = identifiants['password']
@@ -83,10 +88,14 @@ while victoire is False:
         effacer_ecran()
         afficher_matrice(matrice)
         date_fin = time()
-        duree_partie = round(date_fin - date_debut)
-        score = round((largeur*hauteur)*3 / (((nbrCoups)+(duree_partie)) / 2))
+        duree_partie = date_fin - date_debut
+        score = round((largeur*hauteur)*3 / (((nbrCoups)+(duree_partie)) / 2), 2)
+        duree_partie = round(date_fin - date_debut, 2)
         print('Vous avez gagné')
         print("La partie a durée", duree_partie, "secondes")
         print("Vous avez mis", nbrCoups, "coups")
         print('Votre score est de', score, 'points')
         enregistrer_score(userName, password, score)
+        # ajouter voir scores
+        # recommencer avec les mêmes paramètres
+        #quitter
