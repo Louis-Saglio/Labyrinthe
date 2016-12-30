@@ -3,8 +3,8 @@ from module import *
 def creer_compte(user_name='', password='', verbose=False):
     from pickle import Pickler
     if verbose is True:
-        user_name = input("Choisissez un nom d'utilisateur")
-        password = input("Choisissez un mot de passe")
+        user_name = demander("Choisissez un nom d'utilisateur", plage='AZERTYUIOPQSDFGHJKLMWXCVBN?./,;:azertyuiopqsdfghjklmwxcvbn0123456789')
+        password = demander("Choisissez un mot de passe")
     password_clair = password
     password = chiffrage(password, password)
     data = {
@@ -35,9 +35,9 @@ def enregistrer_score(user, password='', newScore=0):
     else:
         print('mot de passe incorrect')
 
-def verifier_password(user_name, password='', demander=False):
-    if demander:
-        password = input("Mot-de-passe ?")
+def verifier_password(user_name, password='', demande=False):
+    if demande:
+        password = demander("Mot-de-passe ?")
     data = lire_compte(user_name)
     real_password = data['password']
     if chiffrage(password, password) == real_password:
@@ -47,8 +47,8 @@ def verifier_password(user_name, password='', demander=False):
 
 def connexion(mode='verbose', user_name='', password=''):
     if mode == 'verbose':
-        user_name = input("Quel est votre nom d'utilisateur ?")
-        password = input("Mot-de-passe ?")
+        user_name = demander("Quel est votre nom d'utilisateur ?")
+        password = demander("Mot-de-passe ?")
     try:
         assert verifier_password(user_name, password) is True
         return {'user_name' : user_name, 'password' : password}
@@ -87,14 +87,13 @@ def ajouter_meilleurs_scores(user, score, fichier='meilleurs_scores'):
             mon_pickler.dump(data)
 
 def afficher_meilleurs_scores(fichier='meilleurs_scores', retourner=False):
-    effacer_ecran()
     data = lire_compte(fichier)
     if retourner is False:
         for i in range(len(data['scores'])):        
             print(data['user_name'][i], ' : ', data['scores'][i])
-            input()
     else:
         return data
+    input()
 
 def determiner_si_meilleur_score(score, fichier='meilleurs_scores'):
     try:
