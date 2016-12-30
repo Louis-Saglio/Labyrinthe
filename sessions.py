@@ -68,45 +68,61 @@ def creer_meilleurs_scores(fichier='meilleurs_scores'):
         mon_pickler.dump(data)
     return data
 
-def ajouter_meilleurs_scores(user, score):
+def ajouter_meilleurs_scores(user, score, fichier='meilleurs_scores'):
     from pickle import Pickler
-    data = lire_compte('meilleurs_scores')
+    try:
+        data = lire_compte(fichier)
+    except:
+        data = creer_meilleurs_scores(fichier)
     lstScores = data['scores']
-    print(lstScores)
     lstUsers = data['user_name']
-    print(lstUsers)
     lstScores.append(score)
-    print(lstScores)
     lstUsers.append(user)
-    print(lstUsers)
     data = {
-        'user_name': [lstUsers],
-        'scores' : [lstScores]
+        'user_name': lstUsers,
+        'scores' : lstScores
         }
-    print(data)
-    with open('saved_game/meilleurs_scores', 'wb') as fichier:
+    with open('saved_game/' + fichier, 'wb') as fichier:
             mon_pickler = Pickler(fichier)
             mon_pickler.dump(data)
 
-def afficher_meilleurs_scores(fichier='meilleurs_scores'):
+def afficher_meilleurs_scores(fichier='meilleurs_scores', retourner=False):
+    effacer_ecran()
     data = lire_compte(fichier)
-    for i in range(len(data['scores'])):
-        print(data['user_name'][i], ' : ', data['scores'][i])
+    if retourner is False:
+        for i in range(len(data['scores'])):        
+            print(data['user_name'][i], ' : ', data['scores'][i])
+            input()
+    else:
+        return data
 
-if __name__ == "__main__":
+def determiner_si_meilleur_score(score, fichier='meilleurs_scores'):
+    try:
+        data = afficher_meilleurs_scores(fichier, True)
+        if score > min(data['scores']):
+            return True
+        else:
+            return False
+    except:
+        return True
+
+if __name__ == "__main__":    
     # test de creer_compte, enregistrer_score, lire_compte, vérifier_password
     from os import remove
+    from random import randint
     user = gen_mot_rand()
     password = gen_mot_rand()
     creer_compte(user, password)
-    enregistrer_score(user, password, 25)
-    enregistrer_score(user, password, 34)
+    enregistrer_score(user, password, randint(0,15))
+    enregistrer_score(user, password, randint(0,15))
     assert verifier_password(user, password) is True
     connexion('autre', user, password)
     connexion('autre', gen_mot_rand(), gen_mot_rand())
     remove('saved_game/' + user)
-    creer_meilleurs_scores()
-    ajouter_meilleurs_scores(user, 15)
-    ajouter_meilleurs_scores(user, 15)
-    ajouter_meilleurs_scores(user, 15)
-    afficher_meilleurs_scores()
+    ajouter_meilleurs_scores(user, randint(0,15), 'meilleurs_scores_test')
+    ajouter_meilleurs_scores(user, randint(0,15), 'meilleurs_scores_test')
+    ajouter_meilleurs_scores(user, randint(0,15), 'meilleurs_scores_test')
+    afficher_meilleurs_scores('meilleurs_scores_test', True)
+    print(determiner_si_meilleur_score(randint(0,15), 'meilleurs_scores_test'))
+    remove('saved_game/meilleurs_scores_test')
+    effacer_ecran()
