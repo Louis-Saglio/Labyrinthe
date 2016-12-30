@@ -31,7 +31,7 @@ while action not in ('123'):
         action = ' '
     
     if action == '4':
-        pass
+        afficher_meilleurs_scores()
 
 
 userName = identifiants['user_name']
@@ -96,6 +96,8 @@ while victoire is False:
         print("Vous avez mis", nbrCoups, "coups")
         print('Votre score est de', score, 'points')
         enregistrer_score(userName, password, score)
+        if determiner_si_meilleur_score(score) is True:
+            ajouter_meilleurs_scores(userName, score)
         # ajouter voir scores
         # recommencer avec les mêmes paramètres
         #quitter
