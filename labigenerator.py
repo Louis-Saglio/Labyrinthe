@@ -55,7 +55,7 @@ def creer_chemin(matrice, mur, chemin, bordure):
 
 
 def creer_laby(hauteur=15, largeur=15):
-    nbrTours = round((hauteur * largeur) / 10)
+    nbrTours = round(((hauteur * largeur) / 10) * 1.5)
     chemin_fini = False
     while chemin_fini is False:
         mat = creer_matrice(hauteur, largeur)
