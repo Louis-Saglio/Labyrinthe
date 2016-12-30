@@ -22,7 +22,7 @@ def choisir_une_taille(min, max):
     bonneTaille = False
     while bonneTaille is False:
         try:
-            taille = int(input())
+            taille = int(demander())
             if taille < min:
                 print("Trop petit")
             elif taille > max:
@@ -84,6 +84,24 @@ def gen_mot_rand():
         c = alpha[randint(0,len(alpha)-1)]
         mot += c
     return mot
+
+def demander(message='', erreur='Entree invalide', plage="azertyuiopqsdfghjklmwxcvbnAZERTYUIOPQSDFGHJKLMWXCVBN0123456789,?;.:/!"):
+    valide = False
+    while valide is False:
+        try:
+            entree = input(message)
+            if entree == 'exit':
+                return 'interruption'
+            for lettre in entree:
+                if lettre in plage:
+                    valide = True
+                else:
+                    valide = False
+                assert valide is True
+        except:
+            if erreur is not False:
+                print(erreur)
+    return entree
 
 
 if __name__ == "__main__":
