@@ -57,6 +57,18 @@ def connexion(mode='verbose', user_name='', password=''):
             print("Nom d'utilisateur ou mot de passe invalide")
         return False
 
+def voir_scores(mode='verbose', user='', password=''):
+    identifiants = False
+    while identifiants is False:
+        identifiants = connexion(mode, user, password)
+    userName = identifiants['user_name']
+    data = lire_compte(userName)
+    scores = data['scores']
+    strScores = ''
+    for score in scores:
+        strScores += (str(score) + '; ')
+    print(strScores)
+
 def creer_meilleurs_scores(fichier='meilleurs_scores'):
     from pickle import Pickler
     data = {
@@ -76,8 +88,14 @@ def ajouter_meilleurs_scores(user, score, fichier='meilleurs_scores'):
         data = creer_meilleurs_scores(fichier)
     lstScores = data['scores']
     lstUsers = data['user_name']
-    lstScores.append(score)
-    lstUsers.append(user)
+    if len(lstUsers) >= 5:
+        mini = min(lstScores)
+        i = lstScores.index(mini)
+        lstScores[i] = score
+        lstUsers[i] = user
+    else:
+        lstScores.append(score)
+        lstUsers.append(user)
     data = {
         'user_name': lstUsers,
         'scores' : lstScores
@@ -117,11 +135,12 @@ if __name__ == "__main__":
     assert verifier_password(user, password) is True
     connexion('autre', user, password)
     connexion('autre', gen_mot_rand(), gen_mot_rand())
-    remove('saved_game/' + user)
     ajouter_meilleurs_scores(user, randint(0,15), 'meilleurs_scores_test')
     ajouter_meilleurs_scores(user, randint(0,15), 'meilleurs_scores_test')
     ajouter_meilleurs_scores(user, randint(0,15), 'meilleurs_scores_test')
     afficher_meilleurs_scores('meilleurs_scores_test', True)
-    print(determiner_si_meilleur_score(randint(0,15), 'meilleurs_scores_test'))
+    determiner_si_meilleur_score(randint(0,15), 'meilleurs_scores_test')
+    voir_scores('autre', user, password)
+    remove('saved_game/' + user)
     remove('saved_game/meilleurs_scores_test')
     effacer_ecran()
