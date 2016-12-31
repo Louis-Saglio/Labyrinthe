@@ -1,7 +1,3 @@
-#ajouter moyenne joueur
-#ajouter les meilleurs scores
-#sécuriser les inputs
-
 from labigenerator import *
 from module import *
 from sessions import *
@@ -30,9 +26,10 @@ while jeu is True:
             identifiants = creer_compte(verbose=True)
 
         if action == '2':
-            identifiants = False
-            while identifiants is False:
-                identifiants = connexion()
+            identifiants = connexion()
+            if identifiants is False:
+                input()
+                action = ' '
 
         if action == '3':
             afficher_credits()
@@ -64,8 +61,8 @@ while jeu is True:
     effacer_ecran()
 
     if action2 != '2':
-        print("choisissez la taille du labyrinthe")
         effacer_ecran()
+        print("choisissez la taille du labyrinthe")
         print("choisissez une hauteur")
         hauteur = choisir_une_taille(4,60)
         print("Choisissez une largeur")
@@ -111,7 +108,11 @@ while jeu is True:
             afficher_matrice(matrice)
             date_fin = time()
             duree_partie = date_fin - date_debut
-            score = round((largeur*hauteur)*3 / (((nbrCoups)+(duree_partie)) / 2), 2)
+            if largeur >= hauteur:
+                facteurX = hauteur / largeur
+            else:
+                facteurX = largeur / hauteur
+            score = round(((largeur*hauteur)*3 / (((nbrCoups)+(duree_partie)) / 2)) * ((facteurX + 1)/2), 2)
             duree_partie = round(date_fin - date_debut, 2)
             print('Vous avez gagné')
             print("La partie a durée", duree_partie, "secondes")
@@ -120,19 +121,17 @@ while jeu is True:
             enregistrer_score(userName, password, score)
             if determiner_si_meilleur_score(score) is True:
                 ajouter_meilleurs_scores(userName, score)
+                print("Vous venez de battre un reccord")
             input()
-            print('Si vous voulez recommencer une partie tapez 1')
-            print("Si vous voulez recommencer avec les mêmes paramètres tapez 2")
-            print("Pour voir vos scores tapez 3")
-            print("Pour retourner au menu tapez 4")
+            print('Si vous voulez recommencer une partie tapez..................1')
+            print("Si vous voulez recommencer avec les mêmes paramètres tapez...2")
+            print("Pour voir vos scores et recommencer une partie tapez.........3")
+            print("Pour retourner au menu tapez.................................4")
             print("Appuyez sur 'entrer' pour valider")
             action2 = demander(plage='1234')
             if action2 == '3':
                 voir_scores('autre', userName, password)
-                action = ' '
+                action = '2'
                 input()
             elif action2 == '4':
                 action = ' '
-            # ajouter voir scores
-            # recommencer avec les mêmes paramètres
-            #quitter
