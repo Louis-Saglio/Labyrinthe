@@ -54,12 +54,13 @@ def effacer_ecran():
 
 def afficher_credits():
     print("Bienvenue dans ce jeu du labyrinthe.")
-    print("Il a été intégralement dévellopé en Python 3.5 par Louis Saglio.")
+    print("Il a été intégralement développé en Python 3.5 par Louis Saglio.")
     print("Le code source a été à 100% inventé par Louis Saglio et n'est aucunement issu de copier-collé (ou autre) de code d'un tiers")
     print("Dans ce jeu vous devrez rejoindre le point marqué 'A' se trouvant en-bas à droite du labyrinthe")
     print("Le labyrinthe sera généré par un script, et vous pourrez en choisir la taille")
-    print("Le jeu a été originelement développé pour MS-DOS mais normalement il fonctionne également sous UNIX")
+    print("Le jeu a été originellement développé pour MS-DOS mais normalement il fonctionne également sous UNIX")
     print("Vous êtes libre de copier, modifier, vendre ou distribuer ce programme à condition de mentionner son auteur, 24/12/16")
+    print("Si vous êtes bloqué par l'oubli d'un identifiant, tapez 'exit' pour retourner au menu")
     input("Appuyez sur 'entrée' pour continuer")
 
 def chiffrage(mot, clef, sens='chiffrage'):
@@ -102,6 +103,13 @@ def demander(message='', erreur='Entree invalide', plage="azertyuiopqsdfghjklmwx
             if erreur is not False:
                 print(erreur)
     return entree
+
+def moyenne_iter(iter):
+    moyenne = 0
+    for i in (iter):
+        moyenne += float(i)
+    moyenne = moyenne / len(iter)
+    return moyenne
 
 
 if __name__ == "__main__":
