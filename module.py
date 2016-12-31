@@ -89,9 +89,9 @@ def demander(message='', erreur='Entree invalide', plage="azertyuiopqsdfghjklmwx
     valide = False
     while valide is False:
         try:
-            entree = input(message)
+            entree = input(message + ' : ')
             if entree == 'exit':
-                return 'interruption'
+                break
             for lettre in entree:
                 if lettre in plage:
                     valide = True
