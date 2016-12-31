@@ -49,6 +49,8 @@ def connexion(mode='verbose', user_name='', password=''):
     if mode == 'verbose':
         user_name = demander("Quel est votre nom d'utilisateur ?")
         password = demander("Mot-de-passe ?")
+        if user_name == 'exit':
+            return False
     try:
         assert verifier_password(user_name, password) is True
         return {'user_name' : user_name, 'password' : password}
@@ -64,10 +66,12 @@ def voir_scores(mode='verbose', user='', password=''):
     userName = identifiants['user_name']
     data = lire_compte(userName)
     scores = data['scores']
+    moyenne = round(moyenne_iter(scores), 2)
     strScores = ''
     for score in scores:
         strScores += (str(score) + '; ')
-    print(strScores)
+    print("Voici les scores de", userName, '\n', strScores)
+    print("Ce qui fait une moyenne de", moyenne)
 
 def creer_meilleurs_scores(fichier='meilleurs_scores'):
     from pickle import Pickler
@@ -107,7 +111,7 @@ def ajouter_meilleurs_scores(user, score, fichier='meilleurs_scores'):
 def afficher_meilleurs_scores(fichier='meilleurs_scores', retourner=False):
     data = lire_compte(fichier)
     if retourner is False:
-        for i in range(len(data['scores'])):        
+        for i in range(len(data['scores'])):
             print(data['user_name'][i], ' : ', data['scores'][i])
     else:
         return data
