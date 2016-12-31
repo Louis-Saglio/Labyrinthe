@@ -76,8 +76,8 @@ def voir_scores(mode='verbose', user='', password=''):
 def creer_meilleurs_scores(fichier='meilleurs_scores'):
     from pickle import Pickler
     data = {
-        'user_name': [],
-        'scores' : []
+        'user_name': ['vide', 'vide', 'vide', 'vide', 'vide'],
+        'scores' : [0, 0, 0, 0, 0]
         }
     with open('saved_game/' + fichier, 'wb') as fichier:
         mon_pickler = Pickler(fichier)
