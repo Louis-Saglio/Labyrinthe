@@ -156,6 +156,26 @@ def tirer_nbr_random(nbr=2, mini=0, maxi=100, entier=True):
     return rep
 
 
+def pourcenter(dico):
+    rep = {}
+    total = 0
+    for item in dico:
+        total += dico[item]
+    for item in dico:
+        rep[item] = round(((100 * dico[item]) / total), 1)
+    return rep
+
+
+def afficher_dictionnaire(dico):
+    compteur = 0
+    for key in dico:
+        compteur += 1
+        if compteur % 3 == 0:
+            print(str(key) + "\t" + str(dico[key]))
+        else:
+            print(str(key) + "\t" + str(dico[key]), end="\t\t")
+
+
 if __name__ == "__main__":
     for i in range(1):
         mot = gen_mot_rand()
@@ -167,3 +187,4 @@ if __name__ == "__main__":
     b = {'z': 1, 'v': 8}
     assert additionner_dico(a, b) == {'v': 8, 'z': 2, 'e': 4}
     assert len(tirer_nbr_random(47)) == 47
+    afficher_dictionnaire({'v': 8, 'z': 2, 'e': 4})
