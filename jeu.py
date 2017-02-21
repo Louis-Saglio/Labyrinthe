@@ -111,7 +111,7 @@ while jeu is True:
                 facteurX = hauteur / largeur
             else:
                 facteurX = largeur / hauteur
-            score = round(((largeur*hauteur)*3 / ((nbrCoups+duree_partie) / 2)) * ((facteurX + 1)/2), 2)
+            score = round(((largeur*hauteur)*3 / ((nbrCoups+duree_partie) / 2)) * ((facteurX + 2)/3), 2)
             duree_partie = round(date_fin - date_debut, 2)
             print('Vous avez gagné')
             print("La partie a durée", duree_partie, "secondes")
