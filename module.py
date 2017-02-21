@@ -129,6 +129,33 @@ def moyenne_iter(iterateur):
     return moyenne
 
 
+def additionner_dico(a, b):
+    rep = {}
+    for key in a:
+        try:
+            rep[key] = a[key] + b[key]
+        except:
+            rep[key] = a[key]
+    for key in b:
+        try:
+            rep[key] = b[key] + a[key]
+        except:
+            rep[key] = b[key]
+    return rep
+
+
+def tirer_nbr_random(nbr=2, mini=0, maxi=100, entier=True):
+    from random import randint, random
+    rep = []
+    for i in range(nbr):
+        if entier:
+            val = randint(mini, maxi)
+        else:
+            val = random(mini, maxi)
+        rep.append(val)
+    return rep
+
+
 if __name__ == "__main__":
     for i in range(1):
         mot = gen_mot_rand()
@@ -136,3 +163,7 @@ if __name__ == "__main__":
         a = chiffrage(mot, clef)
         b = chiffrage(a, clef, 'dechiffrage')
         assert b == mot
+    a = {'z': 1, 'e': 4}
+    b = {'z': 1, 'v': 8}
+    assert additionner_dico(a, b) == {'v': 8, 'z': 2, 'e': 4}
+    assert len(tirer_nbr_random(47)) == 47
