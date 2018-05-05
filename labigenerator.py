@@ -1,3 +1,16 @@
+from random import randint
+
+
+def get_random_stream(mini, maxi):
+    stream = [randint(mini, maxi) for i in range(100000)]
+    while True:
+        for i in stream:
+            yield i
+
+
+STREAM = get_random_stream(0, 2)
+
+
 def creer_matrice(hauteur=15, largeur=25, remplissage='M'):
     matrice = []
     for i in range(hauteur):
@@ -36,15 +49,7 @@ def renvoyer_cases_contact(matrice, h, l, case):
 
 
 def determiner_si_devenir_chemin(matrice, h, l, mur, chemin, bordure):
-    from random import randint
-    rand, contact, bord = False, False, False
-    if randint(0, 2) == 0:
-        rand = True
-    if renvoyer_cases_contact(matrice, h, l, mur) + renvoyer_cases_contact(matrice, h, l, bordure) == 3:
-        contact = True
-    if matrice[h][l] != bordure:
-        bord = True
-    return rand and contact and bord
+    return next(STREAM) == 0 and renvoyer_cases_contact(matrice, h, l, mur) + renvoyer_cases_contact(matrice, h, l, bordure) == 3 and matrice[h][l] != bordure
 
 
 def creer_chemin(matrice, mur, chemin, bordure):
