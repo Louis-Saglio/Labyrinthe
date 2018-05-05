@@ -77,3 +77,15 @@ def creer_laby(hauteur=15, largeur=15):
         else:
             nbrTours += 20
     return mat
+
+
+def as_string_tuple(height, width):
+    return [''.join(row).replace('B', 'M').replace('A', ' ').replace('X', ' ') for row in creer_laby(height, width)]
+
+
+if __name__ == '__main__':
+    from time import time
+    for i in (30, 40, 50, 60, 70, 80, 90, 100):
+        deb = time()
+        creer_laby(i, i)
+        print(time() - deb)
